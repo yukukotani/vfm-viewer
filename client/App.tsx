@@ -37,7 +37,7 @@ const App: React.FC = () => {
   });
 
   if (!markdown) {
-    return "loading";
+    return <>"loading"</>;
   }
 
   return (
