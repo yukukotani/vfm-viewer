@@ -8,7 +8,17 @@ import path from "path";
 
 var connection: FastifyReply | null = null;
 
-export function launch(markdownPath: string) {
+main();
+
+async function main() {
+  console.log(`Starting previewing ${process.argv[2]}`);
+  await launch(process.argv[2]);
+
+  const url = "http://localhost:3000/client/index.html";
+  console.log(`Started. Listening on ${url}`);
+}
+
+async function launch(markdownPath: string) {
   const server = fastify();
   server.register(fastifyCors, {
     origin: "*",
@@ -26,7 +36,7 @@ export function launch(markdownPath: string) {
     res.raw.setHeader("Access-Control-Allow-Origin", "*");
     await sendMarkdown(res.raw, markdownPath);
   });
-  server.listen(3000);
+  await server.listen(3000);
 
   chokidar.watch(markdownPath).on("change", async (newPath: string) => {
     if (!connection) return;
@@ -42,5 +52,3 @@ async function sendMarkdown(connection: ServerResponse, path: string) {
   connection.write(`data: ${json}`);
   connection.write("\n\n");
 }
-
-launch("test.md");
