@@ -12,13 +12,12 @@ function markdownToUrl(markdown: string): string {
 <html lang="ja">
 <head>
 <meta charset="utf-8" />
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="http://localhost:4000/client/theme.css" />
 </head>
 <body>
 ${html}
 </body>
 </html>`;
-  console.log(raw);
   return URL.createObjectURL(
     new Blob([raw], {
       type: "text/html",
@@ -27,29 +26,36 @@ ${html}
 }
 
 const App: React.FC = () => {
-  const [markdown, setMarkdown] = useState<string>("");
+  const [src, setSrc] = useState<string>("");
+  const [count, setCount] = useState(1);
   useEffect(() => {
-    const eventSource = new EventSource(`http://localhost:3000/events`);
+    const eventSource = new EventSource(`http://localhost:4000/events`);
 
     eventSource.onmessage = (e) => {
-      setMarkdown(JSON.parse(e.data).markdown);
+      setSrc(markdownToUrl(JSON.parse(e.data).markdown));
     };
-  });
+  }, []);
 
-  if (!markdown) {
+  if (!src) {
     return <>"loading"</>;
   }
 
   return (
-    <Renderer
-      source={markdownToUrl(markdown)}
-      page={1}
-      renderAllPages={true}
-      autoResize={true}
-      onMessage={(msg, type) => {
-        console.log(type, msg);
-      }}
-    />
+    <div>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount(count - 1)}>-</button>
+      <span>{count}</span>
+      <Renderer
+        source={src}
+        page={count}
+        onMessage={(msg, type) => {
+          console.log(type, msg);
+        }}
+        onLoad={(state) => {
+          console.log(state.epage, state.epageCount, state.docTitle);
+        }}
+      />
+    </div>
   );
 };
 
