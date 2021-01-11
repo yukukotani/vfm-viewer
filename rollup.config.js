@@ -1,3 +1,5 @@
+import path from "path";
+import alias from "@rollup/plugin-alias";
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import nodeResolve from "@rollup/plugin-node-resolve";
@@ -11,24 +13,25 @@ export default {
   input: "client/index.tsx",
   output: {
     dir: "dist/client",
-    format: "esm",
+    format: "iife",
   },
   plugins: [
     replace({ "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV) }),
+    alias({
+      entries: {
+        react: path.resolve("./node_modules/react"),
+      },
+    }),
     nodeResolve({
-      mainFields: ["browser", "module", "main"],
-      preferBuiltins: false,
+      browser: true,
       extensions,
     }),
-    commonjs({
-      include: ["node_modules/**", "../../node_modules/**"],
-    }),
+    commonjs(),
     babel({
       babelHelpers: "bundled",
       compact: false,
       extensions,
     }),
     json(),
-    terser(),
   ],
 };
