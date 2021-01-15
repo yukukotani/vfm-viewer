@@ -6,6 +6,8 @@ import chokidar from "chokidar";
 import fs from "fs";
 import path from "path";
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 var connection: FastifyReply | null = null;
 
 main();
@@ -24,7 +26,7 @@ async function launch(markdownPath: string) {
     origin: "*",
   });
   server.register(fastifyStatic, {
-    root: path.join(process.cwd(), "dist", "client"),
+    root: path.join(__dirname, "client"),
     prefix: "/client",
   });
   server.get("/events", async (_, res) => {

@@ -5,12 +5,16 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "tsc && mv dist/index.js dist/index.mjs"
+    "build": "tsc && npm run copy-client",
+    "copy-client": "cpx '../node_modules/vfm-viewer-client/dist/*' 'dist/client'"
   },
   "dependencies": {
     "chokidar": "^3.4.3",
     "fastify": "^3.9.2",
     "fastify-cors": "^5.1.0",
     "fastify-static": "^3.3.0"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0"
   }
 }
