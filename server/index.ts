@@ -1,9 +1,9 @@
 import { ServerResponse } from "http";
-import { fastify, FastifyReply } from "fastify";
+import { default as fastify, FastifyReply } from "fastify";
 import fastifyCors from "fastify-cors";
 import fastifyStatic from "fastify-static";
 import chokidar from "chokidar";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
 
 var connection: FastifyReply | null = null;
@@ -45,7 +45,7 @@ async function launch(markdownPath: string) {
 }
 
 async function sendMarkdown(connection: ServerResponse, path: string) {
-  const content = (await fs.readFile(path, "utf-8")).toString();
+  const content = fs.readFileSync(path, "utf-8").toString();
   const json = JSON.stringify({
     markdown: content,
   });
