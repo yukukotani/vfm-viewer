@@ -10,16 +10,16 @@ import { terser } from "rollup-plugin-terser";
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
 export default {
-  input: "client/index.tsx",
+  input: "index.tsx",
   output: {
-    dir: "dist/client",
+    dir: "dist",
     format: "iife",
   },
   plugins: [
     replace({ "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV) }),
     alias({
       entries: {
-        react: path.resolve("./node_modules/react"),
+        react: path.resolve("../node_modules/react"),
       },
     }),
     nodeResolve({
