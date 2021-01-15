@@ -1,7 +1,5 @@
 {
   "name": "vfm-viewer",
-  "version": "1.0.0",
-  "main": "index.js",
   "author": "Yuku Kotani <yukukotani@gmail.com>",
   "license": "MIT",
   "private": true,
