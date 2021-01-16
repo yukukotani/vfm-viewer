@@ -2,24 +2,33 @@
 
 import { Arguments, default as yargs } from "yargs";
 import { hideBin } from "yargs/helpers";
+import open from "open";
 
 import { launch } from "@vfm-viewer/server";
 
-yargs(hideBin(process.argv)).command(
-  "preview [file]",
-  "Preview",
-  {
-    port: {
-      alias: "p",
-      default: 3000,
+yargs(hideBin(process.argv))
+  .demandCommand()
+  .command(
+    "preview [file]",
+    "Preview",
+    {
+      port: {
+        alias: "p",
+        default: 3000,
+        type: "number",
+      },
     },
-  },
-  (argv: Arguments) => {
-    console.log("Starting preview...");
-    launch(argv["file"] as string);
+    (argv: Arguments) => {
+      const port = argv["port"] as number;
+      console.log("Starting preview...");
 
-    const url = "http://localhost:3000/client/index.html";
-    open(url);
-    console.log(`Started. Listening on ${url}`);
-  }
-).argv;
+      launch(argv["file"] as string, port);
+
+      const url = `http://localhost:${port}/client/index.html`;
+      open(url);
+      console.log(`Started. Listening on ${url}`);
+    }
+  )
+  .help("h")
+  .alias("h", "help")
+  .strict().argv;

@@ -10,7 +10,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 var connection: FastifyReply | null = null;
 
-export async function launch(markdownPath: string) {
+export async function launch(markdownPath: string, port: number) {
   const server = fastify();
   server.register(fastifyCors, {
     origin: "*",
@@ -28,7 +28,7 @@ export async function launch(markdownPath: string) {
     res.raw.setHeader("Access-Control-Allow-Origin", "*");
     await sendMarkdown(res.raw, markdownPath);
   });
-  await server.listen(3000);
+  await server.listen(port);
 
   chokidar.watch(markdownPath).on("change", async (newPath: string) => {
     if (!connection) return;
