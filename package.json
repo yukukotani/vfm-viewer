@@ -4,8 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build:client": "rollup -c && cp client/index.html dist/client/index.html",
-    "build:server": "tsc --project tsconfig.server.json && mv dist/server/index.js dist/server/index.mjs"
+    "build": "yarn workspaces run build"
   },
   "devDependencies": {
     "prettier": "^2.2.1",
