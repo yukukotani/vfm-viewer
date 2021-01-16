@@ -1,7 +1,7 @@
 {
   "name": "@vfm-viewer/server",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
