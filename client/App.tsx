@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { VFM } from "@vivliostyle/vfm";
 
 import { Renderer } from "@vivliostyle/react";
@@ -29,7 +29,20 @@ ${html}
 
 const App: React.FC = () => {
   const [src, setSrc] = useState<string>("");
-  const [count, setCount] = useState(1);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState<number | undefined>(undefined);
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" && totalPage && totalPage > page) {
+        setPage((page) => page + 1);
+      } else if (e.key === "ArrowLeft" && page > 1) {
+        setPage(page - 1);
+      }
+    },
+    [page, totalPage]
+  );
+
   useEffect(() => {
     const eventSource = new EventSource(`${url}/events`);
 
@@ -38,22 +51,32 @@ const App: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!totalPage) {
+      return;
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [onKeyDown]);
+
+  useEffect(() => {});
+
   if (!src) {
     return <>"loading"</>;
   }
 
   return (
     <div>
-      <button onClick={() => setCount(count + 1)}>+</button>
-      <button onClick={() => setCount(count - 1)}>-</button>
-      <span>{count}</span>
       <Renderer
         source={src}
-        page={count}
+        page={page}
         onMessage={(msg, type) => {
           console.log(type, msg);
         }}
         onLoad={(state) => {
+          setTotalPage(state.epageCount);
           console.log(state.epage, state.epageCount, state.docTitle);
         }}
       />
