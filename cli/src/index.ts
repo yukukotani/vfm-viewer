@@ -8,7 +8,12 @@ import { launch } from "@vfm-viewer/server";
 yargs(hideBin(process.argv)).command(
   "preview [file]",
   "Preview",
-  () => {},
+  {
+    port: {
+      alias: "p",
+      default: 3000,
+    },
+  },
   (argv: Arguments) => {
     console.log("Starting preview...");
     launch(argv["file"] as string);

@@ -10,16 +10,6 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 var connection: FastifyReply | null = null;
 
-main();
-
-async function main() {
-  console.log(`Starting previewing ${process.argv[2]}`);
-  await launch(process.argv[2]);
-
-  const url = "http://localhost:3000/client/index.html";
-  console.log(`Started. Listening on ${url}`);
-}
-
 export async function launch(markdownPath: string) {
   const server = fastify();
   server.register(fastifyCors, {
