@@ -13,7 +13,8 @@
   "workspaces": {
     "packages": [
       "client",
-      "server"
+      "server",
+      "cli"
     ]
   }
 }

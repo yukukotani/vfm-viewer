@@ -20,7 +20,7 @@ async function main() {
   console.log(`Started. Listening on ${url}`);
 }
 
-async function launch(markdownPath: string) {
+export async function launch(markdownPath: string) {
   const server = fastify();
   server.register(fastifyCors, {
     origin: "*",

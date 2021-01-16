@@ -1,12 +1,12 @@
 {
-  "name": "vfm-viewer-server",
+  "name": "@vfm-viewer/server",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "tsc && npm run copy-client",
-    "copy-client": "cpx '../node_modules/vfm-viewer-client/dist/*' 'dist/client'"
+    "copy-client": "cpx '../node_modules/@vfm-viewer/client/dist/*' 'dist/client'"
   },
   "dependencies": {
     "chokidar": "^3.4.3",

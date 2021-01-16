@@ -1,0 +1,19 @@
+{
+  "name": "@vfm-viewer/cli",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "bin": {
+    "vfm-viewer": "./dist/index.js"
+  },
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "@types/yargs": "^15.0.12"
+  }
+}

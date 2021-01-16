@@ -1,5 +1,5 @@
 {
-  "name": "vfm-viewer-client",
+  "name": "@vfm-viewer/client",
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
