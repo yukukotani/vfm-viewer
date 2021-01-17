@@ -14,7 +14,9 @@ interface ViewerOption {
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-var connection: FastifyReply | null = null;
+const connections: {
+  [id: number]: FastifyReply;
+} = {};
 
 export async function launch(markdownPath: string, option: ViewerOption) {
   const server = fastify();
@@ -33,7 +35,12 @@ export async function launch(markdownPath: string, option: ViewerOption) {
     res.send(content);
   });
   server.get("/events", async (_, res) => {
-    connection = res;
+    const connectionId = Math.random();
+    res.raw.on("close", () => {
+      console.log("close");
+      delete connections[connectionId];
+    });
+    connections[connectionId] = res;
     res.raw.setHeader("Connection", "Keep-Alive");
     res.raw.setHeader("Cache-Control", "no-cache");
     res.raw.setHeader("Content-Type", "text/event-stream; charset=utf-8");
@@ -44,8 +51,9 @@ export async function launch(markdownPath: string, option: ViewerOption) {
   await server.listen(option.port);
 
   chokidar.watch(markdownPath).on("change", async (newPath: string) => {
-    if (!connection) return;
-    await sendMarkdown(connection.raw, newPath);
+    Object.values(connections).forEach((connection) => {
+      sendMarkdown(connection.raw, newPath);
+    });
   });
 }
 
