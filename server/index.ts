@@ -9,6 +9,7 @@ import path from "path";
 interface ViewerOption {
   port: number;
   theme: string;
+  size: string;
 }
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);

@@ -35,9 +35,11 @@ yargs(hideBin(process.argv))
       const port = argv["port"] as number;
       console.log("Starting preview...");
 
-      launch(argv["file"] as string, { port, ...config.config });
+      const viewerConfig = { port, ...config.config };
 
-      const url = `http://localhost:${port}/client/index.html`;
+      launch(argv["file"] as string, viewerConfig);
+
+      const url = `http://localhost:${port}/client/index.html?size=${viewerConfig.size}`;
       open(url);
       console.log(`Started. Listening on ${url}`);
     }

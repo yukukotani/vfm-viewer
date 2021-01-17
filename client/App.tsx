@@ -4,6 +4,7 @@ import { VFM } from "@vivliostyle/vfm";
 import { Renderer } from "@vivliostyle/react";
 
 const url = window.location.origin;
+const params = loadQueryParams();
 
 const processor = VFM({ partial: true, language: "ja" });
 
@@ -25,6 +26,11 @@ ${html}
       type: "text/html",
     })
   );
+}
+
+function loadQueryParams(): { size: string | null } {
+  const params = new URLSearchParams(window.location.search);
+  return { size: params.get("size") };
 }
 
 const App: React.FC = () => {
@@ -61,8 +67,6 @@ const App: React.FC = () => {
     };
   }, [onKeyDown]);
 
-  useEffect(() => {});
-
   if (!src) {
     return <>"loading"</>;
   }
@@ -79,6 +83,15 @@ const App: React.FC = () => {
           setTotalPage(state.epageCount);
           console.log(state.epage, state.epageCount, state.docTitle);
         }}
+        userStyleSheet={
+          params.size
+            ? `
+          @page {
+            size: ${params.size.replace(",", " ")} !important;
+          }
+        `
+            : undefined
+        }
       />
     </div>
   );
