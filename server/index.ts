@@ -37,7 +37,6 @@ export async function launch(markdownPath: string, option: ViewerOption) {
   server.get("/events", async (_, res) => {
     const connectionId = Math.random();
     res.raw.on("close", () => {
-      console.log("close");
       delete connections[connectionId];
     });
     connections[connectionId] = res;
