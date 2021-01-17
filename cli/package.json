@@ -11,6 +11,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "cosmiconfig": "^7.0.0",
     "open": "^7.3.1",
     "yargs": "^16.2.0"
   },

@@ -6,11 +6,16 @@ import chokidar from "chokidar";
 import fs from "fs";
 import path from "path";
 
+interface ViewerOption {
+  port: number;
+  theme: string;
+}
+
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 var connection: FastifyReply | null = null;
 
-export async function launch(markdownPath: string, port: number) {
+export async function launch(markdownPath: string, option: ViewerOption) {
   const server = fastify();
   server.register(fastifyCors, {
     origin: "*",
@@ -18,6 +23,13 @@ export async function launch(markdownPath: string, port: number) {
   server.register(fastifyStatic, {
     root: path.join(__dirname, "client"),
     prefix: "/client",
+  });
+  server.get("/dist/theme.css", (_, res) => {
+    const content = fs.readFileSync(
+      path.join(process.cwd(), option.theme),
+      "utf-8"
+    );
+    res.send(content);
   });
   server.get("/events", async (_, res) => {
     connection = res;
@@ -28,7 +40,7 @@ export async function launch(markdownPath: string, port: number) {
     res.raw.setHeader("Access-Control-Allow-Origin", "*");
     await sendMarkdown(res.raw, markdownPath);
   });
-  await server.listen(port);
+  await server.listen(option.port);
 
   chokidar.watch(markdownPath).on("change", async (newPath: string) => {
     if (!connection) return;

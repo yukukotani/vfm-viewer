@@ -14,7 +14,7 @@ function markdownToUrl(markdown: string): string {
 <html lang="ja">
 <head>
 <meta charset="utf-8" />
-<link rel="stylesheet" type="text/css" href="${url}/client/theme.css" />
+<link rel="stylesheet" type="text/css" href="${url}/dist/theme.css" />
 </head>
 <body>
 ${html}
