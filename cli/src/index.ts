@@ -11,19 +11,22 @@ const configLoader = cosmiconfigSync("vivliostyle");
 
 yargs(hideBin(process.argv))
   .demandCommand()
+  .options({
+    config: {
+      alias: "c",
+      default: "vivliostyle.config.js",
+      type: "string",
+      description: "Path to config file",
+    },
+  })
   .command(
     "preview [file]",
-    "Preview",
+    "Preview typesetting result",
     {
       port: {
         alias: "p",
         default: 3000,
         type: "number",
-      },
-      config: {
-        alias: "c",
-        default: "vivliostyle.config.js",
-        type: "string",
       },
     },
     (argv: Arguments) => {
