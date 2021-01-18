@@ -1,5 +1,7 @@
 # vfm-viewer
 
+[![npm version](https://badge.fury.io/js/%40vfm-viewer%2Fcli.svg)](https://badge.fury.io/js/%40vfm-viewer%2Fcli)
+
 Experimental real-time typesetting previewer for [VFM](https://github.com/vivliostyle/vfm).
 
 ## Usage
