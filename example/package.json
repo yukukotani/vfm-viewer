@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "example.md",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "vivliostyle build example.md",
+    "preview": "vfm-viewer preview example.md"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^3.0.0-pre.6"
+  }
+}

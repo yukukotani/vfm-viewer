@@ -14,7 +14,8 @@
     "packages": [
       "client",
       "server",
-      "cli"
+      "cli",
+      "example"
     ]
   }
 }
