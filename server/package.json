@@ -1,6 +1,6 @@
 {
   "name": "@vfm-viewer/server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "license": "MIT",
   "type": "module",
@@ -9,6 +9,7 @@
     "copy-client": "cpx '../node_modules/@vfm-viewer/client/dist/*' 'dist/client'"
   },
   "dependencies": {
+    "@vfm-viewer/client": "^0.2.0",
     "chokidar": "^3.4.3",
     "fastify": "^3.9.2",
     "fastify-cors": "^5.1.0",
