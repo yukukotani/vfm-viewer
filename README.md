@@ -1,6 +1,6 @@
 # vfm-viewer
 
-An experimantal real-time previewer for [VFM](https://github.com/vivliostyle/vfm).
+Experimental real-time previewer for [VFM](https://github.com/vivliostyle/vfm).
 
 ## Usage
 
